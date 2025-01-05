@@ -22,11 +22,15 @@ disk_usage_percentage=$((disk_used * 100 / total_disk))
 # CPU usage
 cpu_usage=$(top -bn 1 | awk -F ',' '/^%Cpu\(s\)/ {print $4}' | awk '{print 100 - $1}')
 
+# Last boot date and time
+boot_time=$(who -b | awk '{print $3, $4}')
+
 wall "
 #Architecture: $arch
 #CPU physical: $physical_processors
 #vCPU: $virtual_processors
 #Memory Usage: $used_ram MB / $total_ram MB ($used_ram_percentage%)
 #Disk Usage: $disk_used MB / $total_disk MB ($disk_usage_percentage%)
-#CPU load: $cpu_usage
+#CPU load: $cpu_usage %
+#Last boot: $boot_time
 "
